@@ -1,0 +1,93 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.12-SNAPSHOT'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.dddjava.jig-gradle-plugin' version '2024.7.1'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = '店舗ご注文システム - Store Order Management System'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url = 'https://repo.spring.io/snapshot' }
+}
+
+dependencies {
+	// Spring Boot Web
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// OpenAPI / Swagger UI (springdoc-openapi v2 for Spring Boot 3)
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6'
+
+	// Test
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// ArchUnit（アーキテクチャ規約テスト）
+	testImplementation 'com.tngtech.archunit:archunit-junit5:1.3.0'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+// JiG設定
+jig {
+	outputDirectory = file("${buildDir}/jig")
+}
+
+// Javadoc設定
+javadoc {
+	options.encoding = 'UTF-8'
+	options.charSet = 'UTF-8'
+	options.locale = 'ja'
+	options.addStringOption('Xdoclint:none', '-quiet')
+	options.links('https://docs.oracle.com/en/java/javase/17/docs/api/')
+	options.links('https://docs.spring.io/spring-framework/docs/current/javadoc-api/')
+}
+
+// ──────────────────────────────────────────
+// 全ドキュメント一括生成タスク
+// ──────────────────────────────────────────
+tasks.register('allDocs') {
+	group = 'documentation'
+	description = '全ドキュメント一括生成（Javadoc + JiG + TypeDoc）'
+	dependsOn 'javadoc', 'jigReports'
+
+	doLast {
+		// フロントエンド TypeDoc 生成
+		def frontendDir = file("${rootProject.projectDir}/../frontend")
+		if (frontendDir.exists()) {
+			exec {
+				workingDir frontendDir
+				if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+					commandLine 'cmd', '/c', 'npm', 'run', 'doc'
+				} else {
+					commandLine 'npm', 'run', 'doc'
+				}
+			}
+			logger.lifecycle("✅ TypeDoc generated at: frontend/docs/typedoc/index.html")
+		} else {
+			logger.warn("⚠️ frontend directory not found, skipping TypeDoc")
+		}
+
+		logger.lifecycle("")
+		logger.lifecycle("========================================")
+		logger.lifecycle("  📚 全ドキュメント生成完了!")
+		logger.lifecycle("========================================")
+		logger.lifecycle("  Javadoc  : build/docs/javadoc/index.html")
+		logger.lifecycle("  JiG      : build/jig/index.html")
+		logger.lifecycle("  TypeDoc  : ../frontend/docs/typedoc/index.html")
+		logger.lifecycle("  OpenAPI  : ./gradlew bootRun → http://localhost:8080/swagger-ui.html")
+		logger.lifecycle("========================================")
+	}
+}

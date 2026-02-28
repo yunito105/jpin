@@ -1,0 +1,30 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "src/types/index.ts",
+    "src/lib/api.ts",
+    "src/lib/theme.ts",
+    "src/components/AppLayout.tsx",
+    "src/components/ThemeRegistry.tsx",
+    "src/app/layout.tsx",
+    "src/app/page.tsx",
+    "src/app/order/page.tsx",
+    "src/app/orders/page.tsx",
+    "src/app/menu/page.tsx"
+  ],
+  "out": "docs/typedoc",
+  "name": "店舗ご注文システム フロントエンド API",
+  "readme": "README.md",
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "includeVersion": true,
+  "categorizeByGroup": true,
+  "sort": ["source-order"],
+  "navigationLinks": {
+    "バックエンドJavadoc": "../demo/build/docs/javadoc/index.html",
+    "プロジェクトREADME": "../README.md"
+  },
+  "tsconfig": "tsconfig.json",
+  "skipErrorChecking": true
+}
