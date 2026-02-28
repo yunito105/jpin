@@ -1,0 +1,15 @@
+com.example.demo
+com.example.demo.application.order
+com.example.demo.common
+com.example.demo.common.date
+com.example.demo.common.exception
+com.example.demo.common.logging
+com.example.demo.domain.model.menu
+com.example.demo.domain.model.order
+com.example.demo.domain.type
+com.example.demo.infrastructure.database
+com.example.demo.query.menu
+com.example.demo.query.order
+com.example.demo.webapi
+com.example.demo.webapi.menu
+com.example.demo.webapi.order

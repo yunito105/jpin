@@ -1,0 +1,68 @@
+digraph "区分使用図" {label="区分使用図";
+rankdir=LR;
+node [shape=box,style=filled,fillcolor=white];
+{
+rank=sink;
+node [shape=box3d];
+"com.example.demo.domain.model.menu.MenuCategory"[label="メニューカテゴリを表す列挙型\nMenuCategory",fillcolor="lightgoldenrod"];
+"com.example.demo.domain.model.order.OrderStatus"[label="注文ステータスを表す列挙型\nOrderStatus",fillcolor="lightgoldenrod"];
+}
+{
+rank=source;
+"com.example.demo.application.order.OrderApplicationService#cancelOrder(java.lang.String)"[shape="ellipse",label="注文をキャンセルする",tooltip="OrderApplicationService.cancelOrder(String)",fillcolor="lemonchiffon",URL="./application.html#com.example.demo.application.order.OrderApplicationService"];
+"com.example.demo.application.order.OrderApplicationService#placeOrder(com.example.demo.application.order.PlaceOrderCommand)"[shape="ellipse",label="注文を作成する",tooltip="OrderApplicationService.placeOrder(PlaceOrderCommand)",fillcolor="lemonchiffon",URL="./application.html#com.example.demo.application.order.OrderApplicationService"];
+"com.example.demo.application.order.OrderApplicationService#updateOrderStatus(com.example.demo.application.order.UpdateOrderStatusCommand)"[shape="ellipse",label="注文ステータスを更新する",tooltip="OrderApplicationService.updateOrderStatus(UpdateOrderStatusCommand)",fillcolor="lemonchiffon",URL="./application.html#com.example.demo.application.order.OrderApplicationService"];
+"com.example.demo.query.menu.MenuQueryService#findAllMenuItems()"[shape="ellipse",label="全メニュー項目一覧を取得する",tooltip="MenuQueryService.findAllMenuItems()",fillcolor="lemonchiffon",URL="./application.html#com.example.demo.query.menu.MenuQueryService"];
+"com.example.demo.query.menu.MenuQueryService#findAvailableMenuItems()"[shape="ellipse",label="提供可能なメニュー項目一覧を取得する",tooltip="MenuQueryService.findAvailableMenuItems()",fillcolor="lemonchiffon",URL="./application.html#com.example.demo.query.menu.MenuQueryService"];
+"com.example.demo.query.menu.MenuQueryService#findMenuItemsByCategory(java.lang.String)"[shape="ellipse",label="カテゴリ別にメニュー項目一覧を取得する",tooltip="MenuQueryService.findMenuItemsByCategory(String)",fillcolor="lemonchiffon",URL="./application.html#com.example.demo.query.menu.MenuQueryService"];
+"com.example.demo.query.menu.MenuQueryService#toView(com.example.demo.domain.model.menu.MenuItem)"[shape="ellipse",label="MenuItemエンティティをMenuItemViewに変換する",tooltip="MenuQueryService.toView(MenuItem)",fillcolor="lemonchiffon",URL="./application.html#com.example.demo.query.menu.MenuQueryService"];
+"com.example.demo.query.order.OrderQueryService#findActiveOrdersByTable(int)"[shape="ellipse",label="テーブル番号でアクティブな注文サマリー一覧を取得する",tooltip="OrderQueryService.findActiveOrdersByTable(int)",fillcolor="lemonchiffon",URL="./application.html#com.example.demo.query.order.OrderQueryService"];
+"com.example.demo.query.order.OrderQueryService#findAllOrders()"[shape="ellipse",label="全注文のサマリー一覧を取得する",tooltip="OrderQueryService.findAllOrders()",fillcolor="lemonchiffon",URL="./application.html#com.example.demo.query.order.OrderQueryService"];
+"com.example.demo.query.order.OrderQueryService#findOrderDetail(java.lang.String)"[shape="ellipse",label="注文詳細を取得する",tooltip="OrderQueryService.findOrderDetail(String)",fillcolor="lemonchiffon",URL="./application.html#com.example.demo.query.order.OrderQueryService"];
+"com.example.demo.query.order.OrderQueryService#findOrdersByStatus(java.lang.String)"[shape="ellipse",label="ステータスで絞り込んだ注文サマリー一覧を取得する",tooltip="OrderQueryService.findOrdersByStatus(String)",fillcolor="lemonchiffon",URL="./application.html#com.example.demo.query.order.OrderQueryService"];
+"com.example.demo.query.order.OrderQueryService#toDetailView(com.example.demo.domain.model.order.Order)"[shape="ellipse",label="Order集約をOrderDetailViewに変換する",tooltip="OrderQueryService.toDetailView(Order)",fillcolor="lemonchiffon",URL="./application.html#com.example.demo.query.order.OrderQueryService"];
+"com.example.demo.query.order.OrderQueryService#toSummary(com.example.demo.domain.model.order.Order)"[shape="ellipse",label="Order集約をOrderSummaryに変換する",tooltip="OrderQueryService.toSummary(Order)",fillcolor="lemonchiffon",URL="./application.html#com.example.demo.query.order.OrderQueryService"];
+}
+"com.example.demo.domain.model.menu.MenuItem"[label="メニュー項目を表すエンティティ\nMenuItem",URL="./domain.html#com.example.demo.domain.model.menu.MenuItem"];
+"com.example.demo.domain.model.menu.MenuItemRepository"[label="メニュー項目リポジトリインターフェース\nMenuItemRepository",URL="./domain.html#com.example.demo.domain.model.menu.MenuItemRepository"];
+"com.example.demo.domain.model.order.Order"[label="注文を表す集約ルートエンティティ\nOrder",URL="./domain.html#com.example.demo.domain.model.order.Order"];
+"com.example.demo.domain.model.order.OrderRepository"[label="注文リポジトリインターフェース\nOrderRepository",URL="./domain.html#com.example.demo.domain.model.order.OrderRepository"];
+
+"com.example.demo.domain.model.order.OrderRepository" -> "com.example.demo.domain.model.order.OrderStatus";
+"com.example.demo.domain.model.menu.MenuItemRepository" -> "com.example.demo.domain.model.menu.MenuItem";
+"com.example.demo.domain.model.order.OrderRepository" -> "com.example.demo.domain.model.order.Order";
+"com.example.demo.domain.model.menu.MenuItem" -> "com.example.demo.domain.model.menu.MenuCategory";
+"com.example.demo.domain.model.order.Order" -> "com.example.demo.domain.model.order.OrderStatus";
+"com.example.demo.domain.model.menu.MenuItemRepository" -> "com.example.demo.domain.model.menu.MenuCategory";
+
+"com.example.demo.application.order.OrderApplicationService#cancelOrder(java.lang.String)" -> "com.example.demo.domain.model.order.Order";
+"com.example.demo.application.order.OrderApplicationService#cancelOrder(java.lang.String)" -> "com.example.demo.domain.model.order.OrderRepository";
+"com.example.demo.application.order.OrderApplicationService#placeOrder(com.example.demo.application.order.PlaceOrderCommand)" -> "com.example.demo.domain.model.menu.MenuItem";
+"com.example.demo.application.order.OrderApplicationService#placeOrder(com.example.demo.application.order.PlaceOrderCommand)" -> "com.example.demo.domain.model.menu.MenuItemRepository";
+"com.example.demo.application.order.OrderApplicationService#placeOrder(com.example.demo.application.order.PlaceOrderCommand)" -> "com.example.demo.domain.model.order.Order";
+"com.example.demo.application.order.OrderApplicationService#placeOrder(com.example.demo.application.order.PlaceOrderCommand)" -> "com.example.demo.domain.model.order.OrderRepository";
+"com.example.demo.application.order.OrderApplicationService#updateOrderStatus(com.example.demo.application.order.UpdateOrderStatusCommand)" -> "com.example.demo.domain.model.order.Order";
+"com.example.demo.application.order.OrderApplicationService#updateOrderStatus(com.example.demo.application.order.UpdateOrderStatusCommand)" -> "com.example.demo.domain.model.order.OrderRepository";
+"com.example.demo.application.order.OrderApplicationService#updateOrderStatus(com.example.demo.application.order.UpdateOrderStatusCommand)" -> "com.example.demo.domain.model.order.OrderStatus";
+"com.example.demo.query.menu.MenuQueryService#findAllMenuItems()" -> "com.example.demo.domain.model.menu.MenuItem";
+"com.example.demo.query.menu.MenuQueryService#findAllMenuItems()" -> "com.example.demo.domain.model.menu.MenuItemRepository";
+"com.example.demo.query.menu.MenuQueryService#findAvailableMenuItems()" -> "com.example.demo.domain.model.menu.MenuItem";
+"com.example.demo.query.menu.MenuQueryService#findAvailableMenuItems()" -> "com.example.demo.domain.model.menu.MenuItemRepository";
+"com.example.demo.query.menu.MenuQueryService#findMenuItemsByCategory(java.lang.String)" -> "com.example.demo.domain.model.menu.MenuCategory";
+"com.example.demo.query.menu.MenuQueryService#findMenuItemsByCategory(java.lang.String)" -> "com.example.demo.domain.model.menu.MenuItem";
+"com.example.demo.query.menu.MenuQueryService#findMenuItemsByCategory(java.lang.String)" -> "com.example.demo.domain.model.menu.MenuItemRepository";
+"com.example.demo.query.menu.MenuQueryService#toView(com.example.demo.domain.model.menu.MenuItem)" -> "com.example.demo.domain.model.menu.MenuCategory";
+"com.example.demo.query.menu.MenuQueryService#toView(com.example.demo.domain.model.menu.MenuItem)" -> "com.example.demo.domain.model.menu.MenuItem";
+"com.example.demo.query.order.OrderQueryService#findActiveOrdersByTable(int)" -> "com.example.demo.domain.model.order.Order";
+"com.example.demo.query.order.OrderQueryService#findActiveOrdersByTable(int)" -> "com.example.demo.domain.model.order.OrderRepository";
+"com.example.demo.query.order.OrderQueryService#findAllOrders()" -> "com.example.demo.domain.model.order.Order";
+"com.example.demo.query.order.OrderQueryService#findAllOrders()" -> "com.example.demo.domain.model.order.OrderRepository";
+"com.example.demo.query.order.OrderQueryService#findOrderDetail(java.lang.String)" -> "com.example.demo.domain.model.order.Order";
+"com.example.demo.query.order.OrderQueryService#findOrderDetail(java.lang.String)" -> "com.example.demo.domain.model.order.OrderRepository";
+"com.example.demo.query.order.OrderQueryService#findOrdersByStatus(java.lang.String)" -> "com.example.demo.domain.model.order.Order";
+"com.example.demo.query.order.OrderQueryService#findOrdersByStatus(java.lang.String)" -> "com.example.demo.domain.model.order.OrderRepository";
+"com.example.demo.query.order.OrderQueryService#findOrdersByStatus(java.lang.String)" -> "com.example.demo.domain.model.order.OrderStatus";
+"com.example.demo.query.order.OrderQueryService#toDetailView(com.example.demo.domain.model.order.Order)" -> "com.example.demo.domain.model.order.Order";
+"com.example.demo.query.order.OrderQueryService#toDetailView(com.example.demo.domain.model.order.Order)" -> "com.example.demo.domain.model.order.OrderStatus";
+"com.example.demo.query.order.OrderQueryService#toSummary(com.example.demo.domain.model.order.Order)" -> "com.example.demo.domain.model.order.Order";
+"com.example.demo.query.order.OrderQueryService#toSummary(com.example.demo.domain.model.order.Order)" -> "com.example.demo.domain.model.order.OrderStatus";}

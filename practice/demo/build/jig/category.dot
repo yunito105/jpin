@@ -1,0 +1,17 @@
+graph "区分図" {label="区分図";
+layout=fdp;
+rankdir=LR;
+node [shape=box,style=filled,fillcolor=lightgoldenrod];
+
+
+subgraph "cluster_com.example.demo.domain.model.menu" {
+label="menu";
+color="lightgray";
+"com.example.demo.domain.model.menu.MenuCategory"[label=<<table border="0" cellspacing="0"><tr><td>メニューカテゴリを表す列挙型<br/>MenuCategory</td></tr><tr><td border="1">APPETIZER</td></tr><tr><td border="1">MAIN_COURSE</td></tr><tr><td border="1">SIDE_DISH</td></tr><tr><td border="1">DRINK</td></tr><tr><td border="1">DESSERT</td></tr></table>>,URL="./enum.html#com.example.demo.domain.model.menu.MenuCategory",fillcolor="lightgoldenrod"];
+}
+
+subgraph "cluster_com.example.demo.domain.model.order" {
+label="order";
+color="lightgray";
+"com.example.demo.domain.model.order.OrderStatus"[label=<<table border="0" cellspacing="0"><tr><td>注文ステータスを表す列挙型<br/>OrderStatus</td></tr><tr><td border="1">PLACED</td></tr><tr><td border="1">PREPARING</td></tr><tr><td border="1">READY</td></tr><tr><td border="1">SERVED</td></tr><tr><td border="1">CANCELLED</td></tr></table>>,URL="./enum.html#com.example.demo.domain.model.order.OrderStatus",fillcolor="lightgoldenrod"];
+}}

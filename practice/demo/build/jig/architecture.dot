@@ -1,0 +1,31 @@
+digraph "アーキテクチャ図" {label="アーキテクチャ図";
+node [shape=component,style=filled];
+graph[splines=ortho];
+subgraph clusterArchitecture {
+label="";
+graph[style=filled,color=lightgoldenrod,fillcolor=lightyellow];
+node [fillcolor=lightgoldenrod,fontsize=20];
+"com.example.demo.application"[label="application"];
+"com.example.demo.common"[label="共通基盤パッケージ"];
+"com.example.demo.domain"[label="domain"];
+"com.example.demo.infrastructure"[label="infrastructure"];
+"com.example.demo.query"[label="query"];
+"com.example.demo.webapi"[label="webapi"];
+}
+
+"com.example.demo.query" -> "org.springframework";
+"com.example.demo.application" -> "com.example.demo.domain";
+"com.example.demo.application" -> "org.springframework";
+"com.example.demo.webapi" -> "io.swagger";
+"com.example.demo.application" -> "com.example.demo.common";
+"com.example.demo.webapi" -> "jakarta.validation";
+"com.example.demo.infrastructure" -> "com.example.demo.domain";
+"com.example.demo.webapi" -> "com.example.demo.application";
+"com.example.demo.webapi" -> "com.example.demo.query";
+"com.example" -> "org.springframework";
+"com.example.demo.webapi" -> "com.example.demo.common";
+"com.example.demo.infrastructure" -> "org.springframework";
+"com.example.demo.webapi" -> "com.example.demo.domain";
+"com.example.demo.webapi" -> "org.springframework";
+"com.example.demo.common" -> "org.slf4j";
+"com.example.demo.query" -> "com.example.demo.domain";}

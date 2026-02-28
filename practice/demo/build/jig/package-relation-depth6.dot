@@ -1,0 +1,17 @@
+digraph "パッケージ関連図" {label="パッケージ関連図";
+summary[shape=note,label="root: com.example.demo.domain\lパッケージ数: 3\l関連数: 3\l"]
+node [shape=box,style=filled,fillcolor=lightgoldenrod];
+edge [color=black];
+"com.example.demo.domain.model.order" -> "com.example.demo.domain.model.menu";
+"com.example.demo.domain.model.order" -> "com.example.demo.domain.type";
+"com.example.demo.domain.model.menu" -> "com.example.demo.domain.type";
+edge [color=red,dir=both,style=bold];
+subgraph "cluster_com.example.demo.domain.model" {
+"com.example.demo.domain.model.menu"[label="menu",URL="./domain.html#com.example.demo.domain.model.menu"];
+"com.example.demo.domain.model.order"[label="order",URL="./domain.html#com.example.demo.domain.model.order"];
+label="model";
+style=filled;fillcolor="lemonchiffon";
+color="lightgoldenrod";
+penwidth=2;
+}
+"com.example.demo.domain.type"[label="type",URL="./domain.html#com.example.demo.domain.type"];}

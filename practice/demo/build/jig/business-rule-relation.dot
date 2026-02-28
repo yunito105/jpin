@@ -1,0 +1,52 @@
+digraph "ビジネスルール関連図" {label="ビジネスルール関連図";
+newrank=true;
+node [shape=box,style=filled,fillcolor=lightgoldenrod];
+subgraph "cluster_com.example.demo.domain.model.menu" {
+label="com.example.demo.domain.model.menu";
+style=filled;fillcolor="lemonchiffon";
+color="lightgoldenrod";
+penwidth=2;
+"com.example.demo.domain.model.menu.MenuCategory"[label="メニューカテゴリを表す列挙型\nMenuCategory",URL="./domain.html#com.example.demo.domain.model.menu.MenuCategory"];
+"com.example.demo.domain.model.menu.MenuItem"[label="メニュー項目を表すエンティティ\nMenuItem",URL="./domain.html#com.example.demo.domain.model.menu.MenuItem"];
+"com.example.demo.domain.model.menu.MenuItemId"[label="メニュー項目IDを表す値オブジェクト\nMenuItemId",URL="./domain.html#com.example.demo.domain.model.menu.MenuItemId"];
+"com.example.demo.domain.model.menu.MenuItemRepository"[label="メニュー項目リポジトリインターフェース\nMenuItemRepository",URL="./domain.html#com.example.demo.domain.model.menu.MenuItemRepository"];
+}
+subgraph "cluster_com.example.demo.domain.model.order" {
+label="com.example.demo.domain.model.order";
+style=filled;fillcolor="lemonchiffon";
+color="lightgoldenrod";
+penwidth=2;
+"com.example.demo.domain.model.order.Order"[label="注文を表す集約ルートエンティティ\nOrder",URL="./domain.html#com.example.demo.domain.model.order.Order"];
+"com.example.demo.domain.model.order.OrderId"[label="注文IDを表す値オブジェクト\nOrderId",URL="./domain.html#com.example.demo.domain.model.order.OrderId"];
+"com.example.demo.domain.model.order.OrderItem"[label="注文明細を表す値オブジェクト\nOrderItem",URL="./domain.html#com.example.demo.domain.model.order.OrderItem"];
+"com.example.demo.domain.model.order.OrderRepository"[label="注文リポジトリインターフェース\nOrderRepository",URL="./domain.html#com.example.demo.domain.model.order.OrderRepository"];
+"com.example.demo.domain.model.order.OrderStatus"[label="注文ステータスを表す列挙型\nOrderStatus",URL="./domain.html#com.example.demo.domain.model.order.OrderStatus"];
+}
+subgraph "cluster_com.example.demo.domain.type" {
+label="com.example.demo.domain.type";
+style=filled;fillcolor="lemonchiffon";
+color="lightgoldenrod";
+penwidth=2;
+"com.example.demo.domain.type.Money"[label="金額を表す値オブジェクト\nMoney",URL="./domain.html#com.example.demo.domain.type.Money"];
+"com.example.demo.domain.type.Quantity"[label="数量を表す値オブジェクト\nQuantity",URL="./domain.html#com.example.demo.domain.type.Quantity"];
+"com.example.demo.domain.type.TableNumber"[label="テーブル番号を表す値オブジェクト\nTableNumber",URL="./domain.html#com.example.demo.domain.type.TableNumber"];
+}
+"com.example.demo.domain.model.menu.MenuItem" -> "com.example.demo.domain.model.menu.MenuCategory";
+"com.example.demo.domain.model.menu.MenuItem" -> "com.example.demo.domain.model.menu.MenuItemId";
+"com.example.demo.domain.model.menu.MenuItem" -> "com.example.demo.domain.type.Money";
+"com.example.demo.domain.model.menu.MenuItemRepository" -> "com.example.demo.domain.model.menu.MenuCategory";
+"com.example.demo.domain.model.menu.MenuItemRepository" -> "com.example.demo.domain.model.menu.MenuItem";
+"com.example.demo.domain.model.menu.MenuItemRepository" -> "com.example.demo.domain.model.menu.MenuItemId";
+"com.example.demo.domain.model.order.Order" -> "com.example.demo.domain.model.order.OrderId";
+"com.example.demo.domain.model.order.Order" -> "com.example.demo.domain.model.order.OrderItem";
+"com.example.demo.domain.model.order.Order" -> "com.example.demo.domain.model.order.OrderStatus";
+"com.example.demo.domain.model.order.Order" -> "com.example.demo.domain.type.Money";
+"com.example.demo.domain.model.order.Order" -> "com.example.demo.domain.type.TableNumber";
+"com.example.demo.domain.model.order.OrderItem" -> "com.example.demo.domain.model.menu.MenuItemId";
+"com.example.demo.domain.model.order.OrderItem" -> "com.example.demo.domain.type.Money";
+"com.example.demo.domain.model.order.OrderItem" -> "com.example.demo.domain.type.Quantity";
+"com.example.demo.domain.model.order.OrderRepository" -> "com.example.demo.domain.model.order.Order";
+"com.example.demo.domain.model.order.OrderRepository" -> "com.example.demo.domain.model.order.OrderId";
+"com.example.demo.domain.model.order.OrderRepository" -> "com.example.demo.domain.model.order.OrderStatus";
+"com.example.demo.domain.model.order.OrderRepository" -> "com.example.demo.domain.type.TableNumber";
+"com.example.demo.domain.type.Money" -> "com.example.demo.domain.type.Quantity";}

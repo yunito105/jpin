@@ -1,0 +1,225 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8"/>
+    <link href="./assets/style.css" rel="stylesheet">
+    <link rel="icon" href="./assets/favicon.ico">
+    <title>区分概要</title>
+</head>
+<body>
+<header class="top">
+    <a href="./index.html">[INDEX]</a>
+    <b>区分概要</b>
+</header>
+<div class="sideNavMain">
+    <nav class="tree">
+        <details open>
+            <summary class="package">
+                <a href="#com.example.demo.domain.model">model</a>
+            </summary>
+            <details open>
+            <summary class="package">
+                <a href="#com.example.demo.domain.model.menu">menu</a>
+            </summary>
+            <div><a href="#com.example.demo.domain.model.menu.MenuCategory">メニューカテゴリを表す列挙型</a></div>
+        </details><details open>
+            <summary class="package">
+                <a href="#com.example.demo.domain.model.order">order</a>
+            </summary>
+            <div><a href="#com.example.demo.domain.model.order.OrderStatus">注文ステータスを表す列挙型</a></div>
+        </details>
+        </details>
+        
+    </nav>
+
+    <main>
+        <section class="type">
+            <h2><a name="com.example.demo.domain.model.menu.MenuCategory">メニューカテゴリを表す列挙型</a></h2>
+            <div class="fully-qualified-name">com.example.demo.domain.model.menu.MenuCategory</div>
+
+            
+                <section class="markdown javadoc">
+
+<p>店舗で提供するメニュー項目の分類を定義する。</p></section>
+            
+
+            <table class="fields">
+                <thead>
+                <tr>
+                    <th>列挙定数名</th>
+                    <th>displayName</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="method-name">APPETIZER</td>
+                    <td>&quot;前菜&quot;</td>
+                </tr>
+                <tr>
+                    <td class="method-name">MAIN_COURSE</td>
+                    <td>&quot;メイン料理&quot;</td>
+                </tr>
+                <tr>
+                    <td class="method-name">SIDE_DISH</td>
+                    <td>&quot;サイドメニュー&quot;</td>
+                </tr>
+                <tr>
+                    <td class="method-name">DRINK</td>
+                    <td>&quot;ドリンク&quot;</td>
+                </tr>
+                <tr>
+                    <td class="method-name">DESSERT</td>
+                    <td>&quot;デザート&quot;</td>
+                </tr>
+            </table>
+
+            <table>
+                <thead class="enum">
+                <tr>
+                    <th width="20%">フィールド</th>
+                    <th>フィールド型</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>displayName</td>
+                    <td>
+                        <span class="weak">java.lang.String</span>
+                        
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            
+            <table>
+                <thead>
+                <tr>
+                    <th width="20%">メソッド</th>
+                    <th>引数</th>
+                    <th>戻り値型</th>
+                    <th>説明</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="method-name">+ カテゴリの表示名を取得する</td>
+                    <td>
+                        
+                    </td>
+                    <td><span class="weak">String</span></td>
+                    <td class="markdown javadoc"></td>
+                </tr>
+            </table>
+        
+            
+            
+        
+        </section>
+        <section class="type">
+            <h2><a name="com.example.demo.domain.model.order.OrderStatus">注文ステータスを表す列挙型</a></h2>
+            <div class="fully-qualified-name">com.example.demo.domain.model.order.OrderStatus</div>
+
+            
+                <section class="markdown javadoc">
+
+<p>注文のライフサイクルにおける状態遷移を定義する。</p>
+
+<h3>状態遷移図</h3>
+<pre>
+  PLACED → PREPARING → READY → SERVED
+    ↓         ↓
+  CANCELLED  CANCELLED
+</pre></section>
+            
+
+            <table class="fields">
+                <thead>
+                <tr>
+                    <th>列挙定数名</th>
+                    <th>displayName</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="method-name">PLACED</td>
+                    <td>&quot;注文受付済み&quot;</td>
+                </tr>
+                <tr>
+                    <td class="method-name">PREPARING</td>
+                    <td>&quot;調理中&quot;</td>
+                </tr>
+                <tr>
+                    <td class="method-name">READY</td>
+                    <td>&quot;提供準備完了&quot;</td>
+                </tr>
+                <tr>
+                    <td class="method-name">SERVED</td>
+                    <td>&quot;提供済み&quot;</td>
+                </tr>
+                <tr>
+                    <td class="method-name">CANCELLED</td>
+                    <td>&quot;キャンセル&quot;</td>
+                </tr>
+            </table>
+
+            <table>
+                <thead class="enum">
+                <tr>
+                    <th width="20%">フィールド</th>
+                    <th>フィールド型</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>displayName</td>
+                    <td>
+                        <span class="weak">java.lang.String</span>
+                        
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            
+            <table>
+                <thead>
+                <tr>
+                    <th width="20%">メソッド</th>
+                    <th>引数</th>
+                    <th>戻り値型</th>
+                    <th>説明</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="method-name">+ このステータスから指定されたステータスへの遷移が有効かどうかを判定する</td>
+                    <td>
+                        <a class="method-argument-item" href="#com.example.demo.domain.model.order.OrderStatus">注文ステータスを表す列挙型</a>
+                    </td>
+                    <td><span class="weak">boolean</span></td>
+                    <td class="markdown javadoc"></td>
+                </tr>
+                <tr>
+                    <td class="method-name">+ ステータスの表示名を取得する</td>
+                    <td>
+                        
+                    </td>
+                    <td><span class="weak">String</span></td>
+                    <td class="markdown javadoc"></td>
+                </tr>
+            </table>
+        
+            
+            
+        
+        </section>
+    </main>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@5.1.0/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.3/dist/mermaid.min.js"></script>
+    <script src="./assets/jig.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,333 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8"/>
+    <link href="./assets/style.css" rel="stylesheet">
+    <script src="./assets/marked.min.js"></script>
+    <link rel="icon" href="./assets/favicon.ico">
+    <title>ユースケース概要</title>
+</head>
+<body>
+<header class="top">
+    <a href="./index.html">[INDEX]</a>
+    <b>ユースケース概要</b>
+</header>
+<div class="sideNavMain">
+    <nav class="tree">
+        <details open>
+            <summary class="package">
+                <a href="#com.example.demo">demo</a>
+            </summary>
+            <details open>
+            <summary class="package">
+                <a href="#com.example.demo.query">query</a>
+            </summary>
+            <details open>
+            <summary class="package">
+                <a href="#com.example.demo.query.menu">menu</a>
+            </summary>
+            <div><a href="#com.example.demo.query.menu.MenuQueryService">メニュークエリサービス（Query側）</a></div>
+        </details><details open>
+            <summary class="package">
+                <a href="#com.example.demo.query.order">order</a>
+            </summary>
+            <div><a href="#com.example.demo.query.order.OrderQueryService">注文クエリサービス（Query側）</a></div>
+        </details>
+        </details><details open>
+            <summary class="package">
+                <a href="#com.example.demo.application">application</a>
+            </summary>
+            <div><a href="#com.example.demo.application.order.OrderApplicationService">注文アプリケーションサービス（Command側）</a></div>
+        </details>
+        </details>
+        
+    </nav>
+
+    <main class="usecase">
+        <details open>
+            <summary>ユースケース複合図（ハンドラ）</summary>
+            <a href="./composite-usecase-handler.svg">
+                <img src="./composite-usecase-handler.svg">
+            </a>
+        </details>
+        <details>
+            <summary>ユースケース複合図</summary>
+            <a href="./composite-usecase.svg">
+                <img src="./composite-usecase.svg">
+            </a>
+        </details>
+
+        <!--
+        <th:block th:each="item : ${jigPackages}">
+            <section th:replace="fragment-package :: item">
+                パッケージ表示
+            </section>
+        </th:block>
+        -->
+
+        
+            <section class="type">
+                <h2><a name="com.example.demo.application.order.OrderApplicationService">注文アプリケーションサービス（Command側）</a></h2>
+                <div class="fully-qualified-name">com.example.demo.application.order.OrderApplicationService</div>
+
+                
+                    <section class="markdown">
+
+<p>注文に関するコマンド（作成・更新・キャンセル）を処理するサービス。
+ヘキサゴナルアーキテクチャにおける入力ポートのアダプタとして機能し、
+ドメインモデルを呼び出してビジネスロジックを実行する。</p>
+
+<h3>責務</h3>
+<ul>
+  <li>コマンドオブジェクトの受付とバリデーション</li>
+  <li>ドメインオブジェクトへの変換と操作の委譲</li>
+  <li>リポジトリを介した永続化</li>
+</ul></section>
+                
+
+                <section class="method">
+                    <h3>注文をキャンセルする</h3>
+                    <div class="fully-qualified-name">cancelOrder(String):void</div>
+                    <dl class="depends">
+                        <dt>要求するもの（引数）</dt>
+                        <dd>
+                            <a class="method-argument-item" href="./domain.html#java.lang.String">String</a>
+                        </dd>
+                        
+                        
+                    </dl>
+
+                    <section class="description markdown"></section>
+                </section>
+
+                <section class="method">
+                    <h3>注文を作成する</h3>
+                    <div class="fully-qualified-name">placeOrder(PlaceOrderCommand):OrderId</div>
+                    <dl class="depends">
+                        <dt>要求するもの（引数）</dt>
+                        <dd>
+                            <a class="method-argument-item" href="./domain.html#com.example.demo.application.order.PlaceOrderCommand">注文作成コマンド</a>
+                        </dd>
+                        <dt>得られるもの（戻り値）</dt>
+                        <dd><a href="./domain.html#com.example.demo.domain.model.order.OrderId">注文IDを表す値オブジェクト</a></dd>
+                    </dl>
+
+                    <section class="description markdown">
+
+<p>メニュー項目の存在確認・提供可否チェックを行った上で、
+ドメインモデルの注文を作成し永続化する。</p></section>
+                </section>
+
+                <section class="method">
+                    <h3>注文ステータスを更新する</h3>
+                    <div class="fully-qualified-name">updateOrderStatus(UpdateOrderStatusCommand):void</div>
+                    <dl class="depends">
+                        <dt>要求するもの（引数）</dt>
+                        <dd>
+                            <a class="method-argument-item" href="./domain.html#com.example.demo.application.order.UpdateOrderStatusCommand">注文ステータス更新コマンド</a>
+                        </dd>
+                        
+                        
+                    </dl>
+
+                    <section class="description markdown">
+
+<p>ドメインモデルのステータス遷移ルールに従い、
+注文のステータスを変更する。</p></section>
+                </section>
+            </section>
+        
+            <section class="type">
+                <h2><a name="com.example.demo.query.menu.MenuQueryService">メニュークエリサービス（Query側）</a></h2>
+                <div class="fully-qualified-name">com.example.demo.query.menu.MenuQueryService</div>
+
+                
+                    <section class="markdown">
+
+<p>メニュー項目に関する参照系の操作を提供するサービス。
+CQRSのQuery側として、読み取り専用のDTOを返却する。</p>
+
+<h3>責務</h3>
+<ul>
+  <li>メニュー一覧の取得（カテゴリ別フィルタ対応）</li>
+  <li>提供可能メニューの取得</li>
+  <li>ドメインモデルからQuery用DTOへの変換</li>
+</ul></section>
+                
+
+                <section class="method">
+                    <h3>全メニュー項目一覧を取得する</h3>
+                    <div class="fully-qualified-name">findAllMenuItems():List&lt;MenuItemView&gt;</div>
+                    <dl class="depends">
+                        
+                        
+                        <dt>得られるもの（戻り値）</dt>
+                        <dd><span class="weak">List</span>&lt;<a href="./domain.html#com.example.demo.query.menu.MenuItemView">メニュー項目ビュー（Query用DTO）</a>&gt;</dd>
+                    </dl>
+
+                    <section class="description markdown"></section>
+                </section>
+
+                <section class="method">
+                    <h3>提供可能なメニュー項目一覧を取得する</h3>
+                    <div class="fully-qualified-name">findAvailableMenuItems():List&lt;MenuItemView&gt;</div>
+                    <dl class="depends">
+                        
+                        
+                        <dt>得られるもの（戻り値）</dt>
+                        <dd><span class="weak">List</span>&lt;<a href="./domain.html#com.example.demo.query.menu.MenuItemView">メニュー項目ビュー（Query用DTO）</a>&gt;</dd>
+                    </dl>
+
+                    <section class="description markdown">
+
+<p>お客様向けに表示する場合はこのメソッドを使用する。</p></section>
+                </section>
+
+                <section class="method">
+                    <h3>カテゴリ別にメニュー項目一覧を取得する</h3>
+                    <div class="fully-qualified-name">findMenuItemsByCategory(String):List&lt;MenuItemView&gt;</div>
+                    <dl class="depends">
+                        <dt>要求するもの（引数）</dt>
+                        <dd>
+                            <a class="method-argument-item" href="./domain.html#java.lang.String">String</a>
+                        </dd>
+                        <dt>得られるもの（戻り値）</dt>
+                        <dd><span class="weak">List</span>&lt;<a href="./domain.html#com.example.demo.query.menu.MenuItemView">メニュー項目ビュー（Query用DTO）</a>&gt;</dd>
+                    </dl>
+
+                    <section class="description markdown"></section>
+                </section>
+
+                <section class="method">
+                    <h3>MenuItemエンティティをMenuItemViewに変換する</h3>
+                    <div class="fully-qualified-name">toView(MenuItem):MenuItemView</div>
+                    <dl class="depends">
+                        <dt>要求するもの（引数）</dt>
+                        <dd>
+                            <a class="method-argument-item" href="./domain.html#com.example.demo.domain.model.menu.MenuItem">メニュー項目を表すエンティティ</a>
+                        </dd>
+                        <dt>得られるもの（戻り値）</dt>
+                        <dd><a href="./domain.html#com.example.demo.query.menu.MenuItemView">メニュー項目ビュー（Query用DTO）</a></dd>
+                    </dl>
+
+                    <section class="description markdown"></section>
+                </section>
+            </section>
+        
+            <section class="type">
+                <h2><a name="com.example.demo.query.order.OrderQueryService">注文クエリサービス（Query側）</a></h2>
+                <div class="fully-qualified-name">com.example.demo.query.order.OrderQueryService</div>
+
+                
+                    <section class="markdown">
+
+<p>注文に関する参照系の操作を提供するサービス。
+CQRSのQuery側として、読み取り専用のDTOを返却する。
+ドメインモデルを直接返さず、Queryに特化したビュー用DTOに変換して返す。</p>
+
+<h3>責務</h3>
+<ul>
+  <li>注文一覧の取得（フィルタリング対応）</li>
+  <li>注文詳細の取得</li>
+  <li>ドメインモデルからQuery用DTOへの変換</li>
+</ul></section>
+                
+
+                <section class="method">
+                    <h3>テーブル番号でアクティブな注文サマリー一覧を取得する</h3>
+                    <div class="fully-qualified-name">findActiveOrdersByTable(int):List&lt;OrderSummary&gt;</div>
+                    <dl class="depends">
+                        <dt>要求するもの（引数）</dt>
+                        <dd>
+                            <a class="method-argument-item" href="./domain.html#int">int</a>
+                        </dd>
+                        <dt>得られるもの（戻り値）</dt>
+                        <dd><span class="weak">List</span>&lt;<a href="./domain.html#com.example.demo.query.order.OrderSummary">注文サマリー（Query用DTO）</a>&gt;</dd>
+                    </dl>
+
+                    <section class="description markdown"></section>
+                </section>
+
+                <section class="method">
+                    <h3>全注文のサマリー一覧を取得する</h3>
+                    <div class="fully-qualified-name">findAllOrders():List&lt;OrderSummary&gt;</div>
+                    <dl class="depends">
+                        
+                        
+                        <dt>得られるもの（戻り値）</dt>
+                        <dd><span class="weak">List</span>&lt;<a href="./domain.html#com.example.demo.query.order.OrderSummary">注文サマリー（Query用DTO）</a>&gt;</dd>
+                    </dl>
+
+                    <section class="description markdown"></section>
+                </section>
+
+                <section class="method">
+                    <h3>注文詳細を取得する</h3>
+                    <div class="fully-qualified-name">findOrderDetail(String):Optional&lt;OrderDetailView&gt;</div>
+                    <dl class="depends">
+                        <dt>要求するもの（引数）</dt>
+                        <dd>
+                            <a class="method-argument-item" href="./domain.html#java.lang.String">String</a>
+                        </dd>
+                        <dt>得られるもの（戻り値）</dt>
+                        <dd><span class="weak">Optional</span>&lt;<a href="./domain.html#com.example.demo.query.order.OrderDetailView">注文詳細ビュー（Query用DTO）</a>&gt;</dd>
+                    </dl>
+
+                    <section class="description markdown"></section>
+                </section>
+
+                <section class="method">
+                    <h3>ステータスで絞り込んだ注文サマリー一覧を取得する</h3>
+                    <div class="fully-qualified-name">findOrdersByStatus(String):List&lt;OrderSummary&gt;</div>
+                    <dl class="depends">
+                        <dt>要求するもの（引数）</dt>
+                        <dd>
+                            <a class="method-argument-item" href="./domain.html#java.lang.String">String</a>
+                        </dd>
+                        <dt>得られるもの（戻り値）</dt>
+                        <dd><span class="weak">List</span>&lt;<a href="./domain.html#com.example.demo.query.order.OrderSummary">注文サマリー（Query用DTO）</a>&gt;</dd>
+                    </dl>
+
+                    <section class="description markdown"></section>
+                </section>
+
+                <section class="method">
+                    <h3>Order集約をOrderDetailViewに変換する</h3>
+                    <div class="fully-qualified-name">toDetailView(Order):OrderDetailView</div>
+                    <dl class="depends">
+                        <dt>要求するもの（引数）</dt>
+                        <dd>
+                            <a class="method-argument-item" href="./domain.html#com.example.demo.domain.model.order.Order">注文を表す集約ルートエンティティ</a>
+                        </dd>
+                        <dt>得られるもの（戻り値）</dt>
+                        <dd><a href="./domain.html#com.example.demo.query.order.OrderDetailView">注文詳細ビュー（Query用DTO）</a></dd>
+                    </dl>
+
+                    <section class="description markdown"></section>
+                </section>
+
+                <section class="method">
+                    <h3>Order集約をOrderSummaryに変換する</h3>
+                    <div class="fully-qualified-name">toSummary(Order):OrderSummary</div>
+                    <dl class="depends">
+                        <dt>要求するもの（引数）</dt>
+                        <dd>
+                            <a class="method-argument-item" href="./domain.html#com.example.demo.domain.model.order.Order">注文を表す集約ルートエンティティ</a>
+                        </dd>
+                        <dt>得られるもの（戻り値）</dt>
+                        <dd><a href="./domain.html#com.example.demo.query.order.OrderSummary">注文サマリー（Query用DTO）</a></dd>
+                    </dl>
+
+                    <section class="description markdown"></section>
+                </section>
+            </section>
+        
+    </main>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@5.1.0/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.3/dist/mermaid.min.js"></script>
+    <script src="./assets/jig.js"></script>
+
+</body>
+</html>
