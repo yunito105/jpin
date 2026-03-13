@@ -1,0 +1,51 @@
+# ============================================
+# WireMock - 決済ゲートウェイ モック定義例
+# ============================================
+# 外部システムのAPIをモック化し、バックエンド開発を並行推進
+# 新しいモックを追加する場合はこのディレクトリにJSONを配置
+
+{
+  "mappings": [
+    {
+      "name": "決済API - 決済実行",
+      "request": {
+        "method": "POST",
+        "urlPathPattern": "/api/v1/payments"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "paymentId": "PAY-{{randomValue length=12 type='ALPHANUMERIC'}}",
+          "status": "COMPLETED",
+          "amount": "{{jsonPath request.body '$.amount'}}",
+          "currency": "{{jsonPath request.body '$.currency'}}",
+          "transactionDate": "{{now format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSSZ'}}"
+        },
+        "transformers": ["response-template"]
+      }
+    },
+    {
+      "name": "物流API - 配送ステータス取得",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/api/v1/shipments/[A-Z0-9]+"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "shipmentId": "SHIP-001",
+          "status": "IN_TRANSIT",
+          "estimatedDelivery": "2026-03-20",
+          "carrier": "DHL",
+          "trackingUrl": "https://example.com/track/SHIP-001"
+        }
+      }
+    }
+  ]
+}

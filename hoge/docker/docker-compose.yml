@@ -1,0 +1,131 @@
+services:
+
+  # ============================================
+  # Frontend - Next.js (TypeScript)
+  # ============================================
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ../frontend:/app
+      - frontend_node_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run dev"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8080
+      - NEXT_PUBLIC_KEYCLOAK_URL=http://localhost:8180
+      - NEXT_PUBLIC_KEYCLOAK_REALM=sales
+      - NEXT_PUBLIC_KEYCLOAK_CLIENT_ID=sales-frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  # ============================================
+  # Backend - Spring Boot (Java 17)
+  # ============================================
+  backend:
+    image: eclipse-temurin:17-jdk
+    working_dir: /app
+    volumes:
+      - ..:/app
+      - gradle_cache:/root/.gradle
+    ports:
+      - "8080:8080"
+      - "5005:5005"  # Remote Debug
+    command: ./gradlew bootRun --args='--spring.profiles.active=local'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@db:1521/FREEPDB1
+      - SPRING_DATASOURCE_USERNAME=sales_app
+      - SPRING_DATASOURCE_PASSWORD=sales_app_password
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://keycloak:8080/realms/sales
+      - MOCK_SERVER_URL=http://mock-server:9090
+      - SPRING_MAIL_HOST=mailhog
+      - SPRING_MAIL_PORT=1025
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    depends_on:
+      db:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # ============================================
+  # Database - Oracle 23ai Free
+  # ============================================
+  db:
+    image: gvenzl/oracle-free:23-slim
+    ports:
+      - "1521:1521"
+    environment:
+      - ORACLE_PASSWORD=oracle_root_password
+      - APP_USER=sales_app
+      - APP_USER_PASSWORD=sales_app_password
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+      - ./init-scripts/oracle:/container-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+
+  # ============================================
+  # Keycloak - 認証基盤 (OIDC / OAuth2)
+  # ============================================
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    ports:
+      - "8180:8080"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB=oracle
+      - KC_DB_URL=jdbc:oracle:thin:@db:1521/FREEPDB1
+      - KC_DB_USERNAME=keycloak
+      - KC_DB_PASSWORD=keycloak_password
+      - KC_HEALTH_ENABLED=true
+    command: start-dev --import-realm
+    volumes:
+      - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/8080 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200'"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  # ============================================
+  # Mock Server - WireMock (外部API模倣)
+  # ============================================
+  mock-server:
+    image: wiremock/wiremock:3x
+    ports:
+      - "9090:8080"
+    volumes:
+      - ./wiremock/mappings:/home/wiremock/mappings
+      - ./wiremock/__files:/home/wiremock/__files
+    command: --verbose --global-response-templating
+
+  # ============================================
+  # MailHog - メール送信テスト
+  # ============================================
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI
+
+volumes:
+  oracle_data:
+  frontend_node_modules:
+  gradle_cache:

@@ -1,0 +1,72 @@
+{
+  "realm": "sales",
+  "enabled": true,
+  "displayName": "海外販売システム",
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "roles": {
+    "realm": [
+      { "name": "admin", "description": "システム管理者" },
+      { "name": "store_manager", "description": "店舗管理者" },
+      { "name": "warehouse_staff", "description": "倉庫担当者" },
+      { "name": "customer_support", "description": "カスタマーサポート" }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "sales-frontend",
+      "name": "販売フロントエンド",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": ["http://localhost:3000/*"],
+      "webOrigins": ["http://localhost:3000"],
+      "defaultClientScopes": ["openid", "profile", "email"]
+    },
+    {
+      "clientId": "sales-backend",
+      "name": "販売バックエンド",
+      "enabled": true,
+      "bearerOnly": true,
+      "publicClient": false
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@example.com",
+      "enabled": true,
+      "firstName": "Admin",
+      "lastName": "User",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["admin"]
+    },
+    {
+      "username": "store_user",
+      "email": "store@example.com",
+      "enabled": true,
+      "firstName": "Store",
+      "lastName": "Manager",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "store123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["store_manager"]
+    }
+  ]
+}
