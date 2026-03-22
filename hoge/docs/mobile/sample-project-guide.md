@@ -54,10 +54,12 @@ app/src/main/java/com/example/myapplication/
 ├── domain/                        ← ドメイン層（What: 何をするか）
 │   ├── model/
 │   │   ├── Product.kt            ← 商品モデル（データの入れ物）
+│   │   ├── Cart.kt               ← カートモデル
 │   │   └── CartItem.kt           ← カートアイテムモデル
 │   └── repository/
-│       ├── ProductQueryRepository.kt  ← Interface（参照系）
-│       └── CartRepository.kt         ← Interface（参照+更新系）
+│       ├── ProductQueryRepository.kt  ← Interface（参照系 = GET）
+│       ├── CartQueryRepository.kt     ← Interface（参照系 = GET）
+│       └── CartCommandRepository.kt   ← Interface（更新系 = POST/DELETE）
 │
 ├── data/                          ← データ層（How: どうやって取るか）
 │   ├── remote/
@@ -74,8 +76,9 @@ app/src/main/java/com/example/myapplication/
 │   │   ├── dao/ProductDao.kt     ← DAO（DBアクセス）
 │   │   └── entity/ProductEntity.kt ← テーブル定義
 │   └── repository/
-│       ├── ProductQueryRepositoryImpl.kt ← Interface の実装
-│       └── CartRepositoryImpl.kt
+│       ├── ProductQueryRepositoryImpl.kt  ← Interface の実装（参照系）
+│       ├── CartQueryRepositoryImpl.kt     ← Interface の実装（参照系）
+│       └── CartCommandRepositoryImpl.kt   ← Interface の実装（更新系）
 │
 ├── di/                            ← DI層（Hilt モジュール）
 │   ├── NetworkModule.kt           ← Retrofit, OkHttp, API の生成
