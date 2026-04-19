@@ -1,0 +1,62 @@
+{
+  "mappings": [
+    {
+      "name": "商品一覧取得",
+      "request": {
+        "method": "GET",
+        "url": "/api/v1/products"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "jsonBody": {
+          "products": [
+            {
+              "id": "P001",
+              "name": "北欧風ソファ 3人掛け",
+              "category": "家具",
+              "price": 89800,
+              "stock": 15,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": "P002",
+              "name": "シングルベッドフレーム",
+              "category": "家具",
+              "price": 34900,
+              "stock": 8,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": "P003",
+              "name": "ダイニングテーブルセット 4人用",
+              "category": "家具",
+              "price": 128000,
+              "stock": 3,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": "P004",
+              "name": "フロアスタンドライト",
+              "category": "照明",
+              "price": 12800,
+              "stock": 22,
+              "status": "AVAILABLE"
+            },
+            {
+              "id": "P005",
+              "name": "収納ボックス 5個セット",
+              "category": "収納",
+              "price": 3980,
+              "stock": 0,
+              "status": "OUT_OF_STOCK"
+            }
+          ],
+          "total": 5
+        }
+      }
+    }
+  ]
+}

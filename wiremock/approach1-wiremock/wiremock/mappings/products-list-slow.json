@@ -1,0 +1,27 @@
+{
+  "mappings": [
+    {
+      "name": "商品一覧取得 - 3秒遅延",
+      "request": {
+        "method": "GET",
+        "urlPath": "/api/v1/products",
+        "queryParameters": {
+          "scenario": {
+            "equalTo": "slow"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "fixedDelayMilliseconds": 3000,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "jsonBody": {
+          "products": [],
+          "total": 0
+        }
+      }
+    }
+  ]
+}

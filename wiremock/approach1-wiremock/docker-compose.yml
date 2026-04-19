@@ -1,0 +1,9 @@
+services:
+  wiremock:
+    image: wiremock/wiremock:3.13.0
+    container_name: retail-wiremock
+    ports:
+      - "9090:8080"
+    volumes:
+      - ./wiremock/mappings:/home/wiremock/mappings
+    command: --verbose --global-response-templating

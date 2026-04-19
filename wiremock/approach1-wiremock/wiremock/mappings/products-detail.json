@@ -1,0 +1,139 @@
+{
+  "mappings": [
+    {
+      "name": "商品詳細取得 - P001",
+      "request": {
+        "method": "GET",
+        "url": "/api/v1/products/P001"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "jsonBody": {
+          "id": "P001",
+          "name": "北欧風ソファ 3人掛け",
+          "category": "家具",
+          "price": 89800,
+          "stock": 15,
+          "status": "AVAILABLE",
+          "description": "シンプルで機能的な北欧スタイルのソファ。3人がゆったり座れる大きさ。上質なファブリック素材使用。",
+          "dimensions": {
+            "width": 210,
+            "depth": 90,
+            "height": 85
+          }
+        }
+      }
+    },
+    {
+      "name": "商品詳細取得 - P002",
+      "request": {
+        "method": "GET",
+        "url": "/api/v1/products/P002"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "jsonBody": {
+          "id": "P002",
+          "name": "シングルベッドフレーム",
+          "category": "家具",
+          "price": 34900,
+          "stock": 8,
+          "status": "AVAILABLE",
+          "description": "すっきりとしたデザインのシングルベッドフレーム。スラット付きで別途マットレスが必要。",
+          "dimensions": {
+            "width": 100,
+            "depth": 210,
+            "height": 35
+          }
+        }
+      }
+    },
+    {
+      "name": "商品詳細取得 - P003",
+      "request": {
+        "method": "GET",
+        "url": "/api/v1/products/P003"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "jsonBody": {
+          "id": "P003",
+          "name": "ダイニングテーブルセット 4人用",
+          "category": "家具",
+          "price": 128000,
+          "stock": 3,
+          "status": "AVAILABLE",
+          "description": "4人でゆったり使えるダイニングテーブルと椅子4脚のセット。無垢材使用で温かみのある仕上がり。",
+          "dimensions": {
+            "width": 160,
+            "depth": 80,
+            "height": 72
+          }
+        }
+      }
+    },
+    {
+      "name": "商品詳細取得 - P004",
+      "request": {
+        "method": "GET",
+        "url": "/api/v1/products/P004"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "jsonBody": {
+          "id": "P004",
+          "name": "フロアスタンドライト",
+          "category": "照明",
+          "price": 12800,
+          "stock": 22,
+          "status": "AVAILABLE",
+          "description": "落ち着いた雰囲気のフロアスタンドライト。間接照明として最適。LED電球対応（電球別売）。",
+          "dimensions": {
+            "width": 35,
+            "depth": 35,
+            "height": 145
+          }
+        }
+      }
+    },
+    {
+      "name": "商品詳細取得 - P005",
+      "request": {
+        "method": "GET",
+        "url": "/api/v1/products/P005"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "jsonBody": {
+          "id": "P005",
+          "name": "収納ボックス 5個セット",
+          "category": "収納",
+          "price": 3980,
+          "stock": 0,
+          "status": "OUT_OF_STOCK",
+          "description": "積み重ね可能なシンプルな収納ボックス5個セット。クローゼットや棚の収納に最適。",
+          "dimensions": {
+            "width": 30,
+            "depth": 40,
+            "height": 25
+          }
+        }
+      }
+    }
+  ]
+}

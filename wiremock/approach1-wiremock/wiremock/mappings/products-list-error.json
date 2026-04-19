@@ -1,0 +1,26 @@
+{
+  "mappings": [
+    {
+      "name": "商品一覧取得 - 500エラー",
+      "request": {
+        "method": "GET",
+        "urlPath": "/api/v1/products",
+        "queryParameters": {
+          "scenario": {
+            "equalTo": "error"
+          }
+        }
+      },
+      "response": {
+        "status": 500,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "jsonBody": {
+          "error": "Internal Server Error",
+          "message": "予期しないエラーが発生しました"
+        }
+      }
+    }
+  ]
+}
